@@ -3,61 +3,280 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>자동차 취등록세 계산기</title>
+    <title>초간단 AI 도구 모음</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>자동차 취등록세 계산기</h1>
+            <h1>초간단 AI 도구 모음</h1>
             <button id="theme-toggle" type="button" aria-pressed="false">Dark Mode</button>
         </div>
-        <p class="subtitle">대한민국 자동차 취등록세(취득세) 계산기</p>
-        <div class="calculator">
-            <label class="field">
-                차량 과세표준(원)
-                <input id="price-input" type="number" min="0" step="1000" placeholder="예: 30000000">
-                <span class="hint">신차는 취득 당시 가액, 중고차는 신고가액이 시가표준액보다 낮으면 시가표준액 적용</span>
-            </label>
+        <p class="subtitle">텍스트 입력만으로 빠르게 결과를 만드는 미니 도구 8종 세트</p>
 
-            <label class="field">
-                차량 구분
-                <select id="category-select">
-                    <option value="nonbiz_passenger">비영업용 승용차 (7%)</option>
-                    <option value="nonbiz_passenger_light">비영업용 승용차 경차 (4%)</option>
-                    <option value="nonbiz_other">그 밖의 비영업용 (5%)</option>
-                    <option value="biz">영업용 (4%)</option>
-                </select>
-            </label>
-
-            <label class="field inline">
-                <input id="license-tax" type="checkbox">
-                등록면허세(차량 건당 15,000원) 포함
-            </label>
-
-            <div class="results">
-                <div class="result-row">
-                    <span>취득세</span>
-                    <strong id="acq-tax">0원</strong>
-                </div>
-                <div class="result-row">
-                    <span>등록면허세</span>
-                    <strong id="reg-tax">0원</strong>
-                </div>
-                <div class="result-row total">
-                    <span>합계</span>
-                    <strong id="total-tax">0원</strong>
-                </div>
-            </div>
+        <div class="tool-nav" role="tablist" aria-label="AI 도구">
+            <button class="tab active" data-target="tool-title" role="tab" aria-selected="true">AI 제목 생성기</button>
+            <button class="tab" data-target="tool-summary" role="tab" aria-selected="false">텍스트 요약기</button>
+            <button class="tab" data-target="tool-hashtag" role="tab" aria-selected="false">해시태그 생성기</button>
+            <button class="tab" data-target="tool-rewrite" role="tab" aria-selected="false">문장 리라이트</button>
+            <button class="tab" data-target="tool-idea" role="tab" aria-selected="false">아이디어 생성기</button>
+            <button class="tab" data-target="tool-nickname" role="tab" aria-selected="false">랜덤 닉네임 생성기</button>
+            <button class="tab" data-target="tool-translate" role="tab" aria-selected="false">번역 + 톤 변경</button>
+            <button class="tab" data-target="tool-prompt" role="tab" aria-selected="false">AI 프롬프트 생성기</button>
         </div>
 
-        <h2>참고</h2>
-        <ul id="history-list">
-            <li>취득세 과세표준은 취득 당시 가액이며, 신고가액이 시가표준액보다 낮으면 시가표준액이 적용됩니다.</li>
-            <li>자동차 취득세율: 비영업용 승용 7%(경차 4%), 그 밖의 비영업용 5%(경차 4%), 영업용 4%.</li>
-            <li>등록면허세: 그 밖의 등록은 차량 건당 15,000원.</li>
-            <li>이 계산기는 이륜차, 감면, 지역개발채권, 교육세·농특세 등은 제외합니다.</li>
-        </ul>
+        <section id="tool-title" class="tool-panel active" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>AI 제목 생성기</h2>
+                    <p class="hint">핵심 내용과 톤만 입력하면 다양한 제목을 빠르게 생성합니다.</p>
+                </div>
+                <div class="chip-group" aria-label="제목 스타일">
+                    <button class="chip active" data-value="smart">정보형</button>
+                    <button class="chip" data-value="emotional">감성형</button>
+                    <button class="chip" data-value="curious">궁금증형</button>
+                    <button class="chip" data-value="short">짧고 강한</button>
+                </div>
+            </div>
+            <label class="field">
+                주제/요약
+                <textarea id="title-input" rows="4" placeholder="예: 직장인을 위한 10분 아침 루틴, 생산성 향상 팁"></textarea>
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="title-generate">제목 생성</button>
+                <button data-action="title-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>결과</span>
+                    <button class="ghost" data-action="title-copy">복사</button>
+                </div>
+                <ul id="title-output" class="output-list"></ul>
+            </div>
+        </section>
+
+        <section id="tool-summary" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>텍스트 요약기</h2>
+                    <p class="hint">문장을 분석해 핵심만 추려 간단히 정리합니다.</p>
+                </div>
+                <div class="chip-group" aria-label="요약 길이">
+                    <button class="chip active" data-value="short">짧게</button>
+                    <button class="chip" data-value="medium">보통</button>
+                    <button class="chip" data-value="long">길게</button>
+                </div>
+            </div>
+            <label class="field">
+                원문
+                <textarea id="summary-input" rows="6" placeholder="요약할 문장을 입력하세요."></textarea>
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="summary-generate">요약하기</button>
+                <button data-action="summary-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>요약 결과</span>
+                    <button class="ghost" data-action="summary-copy">복사</button>
+                </div>
+                <ul id="summary-output" class="output-list"></ul>
+            </div>
+        </section>
+
+        <section id="tool-hashtag" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>해시태그 생성기</h2>
+                    <p class="hint">텍스트에서 키워드를 뽑아 해시태그로 정리합니다.</p>
+                </div>
+                <div class="chip-group" aria-label="개수">
+                    <button class="chip active" data-value="6">6개</button>
+                    <button class="chip" data-value="10">10개</button>
+                    <button class="chip" data-value="15">15개</button>
+                </div>
+            </div>
+            <label class="field">
+                텍스트
+                <textarea id="hashtag-input" rows="5" placeholder="해시태그를 만들 텍스트를 입력하세요."></textarea>
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="hashtag-generate">해시태그 생성</button>
+                <button data-action="hashtag-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>해시태그</span>
+                    <button class="ghost" data-action="hashtag-copy">복사</button>
+                </div>
+                <div id="hashtag-output" class="output-tags"></div>
+            </div>
+        </section>
+
+        <section id="tool-rewrite" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>문장 리라이트</h2>
+                    <p class="hint">입력 문장을 다양한 톤으로 빠르게 재구성합니다.</p>
+                </div>
+                <div class="chip-group" aria-label="톤">
+                    <button class="chip active" data-value="concise">간결</button>
+                    <button class="chip" data-value="friendly">친근</button>
+                    <button class="chip" data-value="formal">격식</button>
+                    <button class="chip" data-value="persuasive">설득</button>
+                </div>
+            </div>
+            <label class="field">
+                원문
+                <textarea id="rewrite-input" rows="5" placeholder="리라이트할 문장을 입력하세요."></textarea>
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="rewrite-generate">리라이트</button>
+                <button data-action="rewrite-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>리라이트 결과</span>
+                    <button class="ghost" data-action="rewrite-copy">복사</button>
+                </div>
+                <ul id="rewrite-output" class="output-list"></ul>
+            </div>
+        </section>
+
+        <section id="tool-idea" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>아이디어 생성기</h2>
+                    <p class="hint">키워드를 넣으면 즉시 사용할 수 있는 아이디어를 제안합니다.</p>
+                </div>
+                <div class="chip-group" aria-label="개수">
+                    <button class="chip active" data-value="6">6개</button>
+                    <button class="chip" data-value="10">10개</button>
+                    <button class="chip" data-value="15">15개</button>
+                </div>
+            </div>
+            <label class="field">
+                키워드
+                <input id="idea-input" type="text" placeholder="예: 카페 창업, 헬스케어, 여행 브이로그">
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="idea-generate">아이디어 생성</button>
+                <button data-action="idea-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>아이디어</span>
+                    <button class="ghost" data-action="idea-copy">복사</button>
+                </div>
+                <ul id="idea-output" class="output-list"></ul>
+            </div>
+        </section>
+
+        <section id="tool-nickname" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>랜덤 닉네임 생성기</h2>
+                    <p class="hint">컨셉에 맞는 감각적인 닉네임을 바로 뽑아줍니다.</p>
+                </div>
+                <div class="chip-group" aria-label="스타일">
+                    <button class="chip active" data-value="cute">귀여움</button>
+                    <button class="chip" data-value="cool">멋짐</button>
+                    <button class="chip" data-value="minimal">미니멀</button>
+                </div>
+            </div>
+            <div class="actions">
+                <button class="primary" data-action="nickname-generate">닉네임 생성</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>닉네임</span>
+                    <button class="ghost" data-action="nickname-copy">복사</button>
+                </div>
+                <div id="nickname-output" class="output-tags"></div>
+            </div>
+        </section>
+
+        <section id="tool-translate" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>번역 + 톤 변경</h2>
+                    <p class="hint">즉시 사용 가능한 번역 요청 프롬프트를 만들어줍니다.</p>
+                </div>
+                <div class="chip-group" aria-label="톤">
+                    <button class="chip active" data-value="natural">자연스럽게</button>
+                    <button class="chip" data-value="formal">격식</button>
+                    <button class="chip" data-value="casual">캐주얼</button>
+                </div>
+            </div>
+            <label class="field">
+                원문
+                <textarea id="translate-input" rows="5" placeholder="번역할 텍스트를 입력하세요."></textarea>
+            </label>
+            <label class="field">
+                언어
+                <select id="translate-select">
+                    <option value="ko-to-en">한국어 → 영어</option>
+                    <option value="en-to-ko">영어 → 한국어</option>
+                    <option value="ko-to-ja">한국어 → 일본어</option>
+                    <option value="ko-to-zh">한국어 → 중국어</option>
+                </select>
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="translate-generate">번역 프롬프트 생성</button>
+                <button data-action="translate-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>프롬프트</span>
+                    <button class="ghost" data-action="translate-copy">복사</button>
+                </div>
+                <pre id="translate-output" class="output-block"></pre>
+            </div>
+        </section>
+
+        <section id="tool-prompt" class="tool-panel" role="tabpanel">
+            <div class="panel-head">
+                <div>
+                    <h2>AI 프롬프트 생성기</h2>
+                    <p class="hint">목표와 조건을 입력하면 바로 붙여넣을 프롬프트를 만듭니다.</p>
+                </div>
+                <div class="chip-group" aria-label="톤">
+                    <button class="chip active" data-value="clear">명확</button>
+                    <button class="chip" data-value="creative">크리에이티브</button>
+                    <button class="chip" data-value="expert">전문가</button>
+                </div>
+            </div>
+            <label class="field">
+                목표
+                <input id="prompt-goal" type="text" placeholder="예: 제품 소개 문구 작성">
+            </label>
+            <label class="field">
+                포함할 정보
+                <textarea id="prompt-input" rows="4" placeholder="예: 타깃, 핵심 기능, 차별점"></textarea>
+            </label>
+            <label class="field">
+                출력 형식
+                <input id="prompt-format" type="text" placeholder="예: 5가지 버전, 표 형식, 200자 이내">
+            </label>
+            <div class="actions">
+                <button class="primary" data-action="prompt-generate">프롬프트 생성</button>
+                <button data-action="prompt-clear">초기화</button>
+            </div>
+            <div class="output">
+                <div class="output-head">
+                    <span>프롬프트</span>
+                    <button class="ghost" data-action="prompt-copy">복사</button>
+                </div>
+                <pre id="prompt-output" class="output-block"></pre>
+            </div>
+        </section>
+
+        <p class="footer-note">모든 도구는 브라우저 내에서 초간단 로직으로 작동합니다. 실제 AI 연동이 필요하면 API 연결을 추가하세요.</p>
+        </div>
+
     </div>
     <script src="main.js"></script>
 </body>
