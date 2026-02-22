@@ -3,19 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lotto Number Generator</title>
+    <title>자동차 취등록세 계산기</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <div class="header">
-            <h1>Lotto Number Generator</h1>
+            <h1>자동차 취등록세 계산기</h1>
             <button id="theme-toggle" type="button" aria-pressed="false">Dark Mode</button>
         </div>
-        <button id="generate-btn">Generate Numbers</button>
-        <div id="numbers-container"></div>
-        <h2>History</h2>
-        <ul id="history-list"></ul>
+        <p class="subtitle">대한민국 자동차 취등록세(취득세) 계산기</p>
+        <div class="calculator">
+            <label class="field">
+                차량 과세표준(원)
+                <input id="price-input" type="number" min="0" step="1000" placeholder="예: 30000000">
+                <span class="hint">신차는 취득 당시 가액, 중고차는 신고가액이 시가표준액보다 낮으면 시가표준액 적용</span>
+            </label>
+
+            <label class="field">
+                차량 구분
+                <select id="category-select">
+                    <option value="nonbiz_passenger">비영업용 승용차 (7%)</option>
+                    <option value="nonbiz_passenger_light">비영업용 승용차 경차 (4%)</option>
+                    <option value="nonbiz_other">그 밖의 비영업용 (5%)</option>
+                    <option value="biz">영업용 (4%)</option>
+                </select>
+            </label>
+
+            <label class="field inline">
+                <input id="license-tax" type="checkbox">
+                등록면허세(차량 건당 15,000원) 포함
+            </label>
+
+            <div class="results">
+                <div class="result-row">
+                    <span>취득세</span>
+                    <strong id="acq-tax">0원</strong>
+                </div>
+                <div class="result-row">
+                    <span>등록면허세</span>
+                    <strong id="reg-tax">0원</strong>
+                </div>
+                <div class="result-row total">
+                    <span>합계</span>
+                    <strong id="total-tax">0원</strong>
+                </div>
+            </div>
+        </div>
+
+        <h2>참고</h2>
+        <ul id="history-list">
+            <li>취득세 과세표준은 취득 당시 가액이며, 신고가액이 시가표준액보다 낮으면 시가표준액이 적용됩니다.</li>
+            <li>자동차 취득세율: 비영업용 승용 7%(경차 4%), 그 밖의 비영업용 5%(경차 4%), 영업용 4%.</li>
+            <li>등록면허세: 그 밖의 등록은 차량 건당 15,000원.</li>
+            <li>이 계산기는 이륜차, 감면, 지역개발채권, 교육세·농특세 등은 제외합니다.</li>
+        </ul>
     </div>
     <script src="main.js"></script>
 </body>
