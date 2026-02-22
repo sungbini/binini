@@ -271,6 +271,7 @@ button.ghost {
     padding: 12px;
     border-radius: 8px;
     line-height: 1.5;
+    min-height: 48px;
 }
 
 .footer-note {
