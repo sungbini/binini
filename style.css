@@ -141,62 +141,6 @@ h1 {
     font-size: 1.3em;
 }
 
-.chip-group {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.chip {
-    border: 1px solid var(--divider-color);
-    background: transparent;
-    color: var(--text-color);
-    padding: 6px 12px;
-    border-radius: 999px;
-    cursor: pointer;
-    font-size: 0.85em;
-    transition: all 0.2s ease;
-}
-
-.chip.active {
-    background: var(--primary-color);
-    color: var(--white);
-    border-color: transparent;
-}
-
-.field {
-    display: grid;
-    gap: 8px;
-    text-align: left;
-    font-weight: 600;
-}
-
-.field input[type="text"],
-.field input[type="number"],
-.field select {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--divider-color);
-    background: var(--white);
-    color: var(--text-color);
-    font-size: 1em;
-}
-
-.field textarea {
-    padding: 12px 14px;
-    border-radius: 10px;
-    border: 1px solid var(--divider-color);
-    background: var(--white);
-    color: var(--text-color);
-    font-size: 1em;
-    resize: vertical;
-}
-
-.field input::placeholder,
-.field textarea::placeholder {
-    color: rgba(107, 114, 128, 0.8);
-}
-
 .hint {
     font-weight: 400;
     font-size: 0.9em;
@@ -240,27 +184,6 @@ button.ghost {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-
-.output-list {
-    margin: 0;
-    padding-left: 18px;
-    display: grid;
-    gap: 8px;
-}
-
-.output-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-}
-
-.output-tag {
-    background: var(--card-bg);
-    border: 1px solid var(--divider-color);
-    padding: 6px 10px;
-    border-radius: 999px;
-    font-size: 0.9em;
 }
 
 .output-block {
